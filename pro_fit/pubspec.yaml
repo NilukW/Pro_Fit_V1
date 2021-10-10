@@ -43,6 +43,7 @@ dependencies:
   fluttertoast: ^8.0.8
   intl: ^0.17.0
   date_format: ^2.0.4
+  expansion_tile_card: ^2.0.0
 
 dev_dependencies:
   flutter_test:

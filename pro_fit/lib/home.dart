@@ -3,6 +3,8 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:pro_fit/auth/login.dart';
+import 'package:pro_fit/member/dietplan.dart';
+import 'package:pro_fit/member/workoutplan.dart';
 
 import 'member/charts.dart';
 import 'model/member.dart';
@@ -157,6 +159,7 @@ class _HomeState extends State<Home> {
                   // ...
                   // Then close the drawer
                   Navigator.pop(context);
+                  Navigator.of(context).pushNamed(WorkoutPlan.tag);
                 },
               ),
             ),
@@ -172,6 +175,7 @@ class _HomeState extends State<Home> {
                   // ...
                   // Then close the drawer
                   Navigator.pop(context);
+                  Navigator.of(context).pushNamed(DietPlan.tag);
                 },
               ),
             ),

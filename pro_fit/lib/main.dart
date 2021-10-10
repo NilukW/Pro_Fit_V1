@@ -4,6 +4,8 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:pro_fit/auth/signup.dart';
 import 'package:pro_fit/home.dart';
+import 'package:pro_fit/member/dietplan.dart';
+import 'package:pro_fit/member/workoutplan.dart';
 
 import 'auth/login.dart';
 
@@ -23,6 +25,8 @@ class _ProFitAppState extends State<ProFitApp> {
     Login.tag: (context) => Login(),
     Home.tag: (context) => Home(),
     SignUp.tag: (context) => SignUp(),
+    DietPlan.tag: (context) => DietPlan(),
+    WorkoutPlan.tag: (context) => WorkoutPlan(),
   };
 
   @override
