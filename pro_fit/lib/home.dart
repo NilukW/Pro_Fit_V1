@@ -1,9 +1,12 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:pro_fit/auth/login.dart';
 
 import 'member/charts.dart';
+import 'model/member.dart';
+import 'model/memberRepository.dart';
 
 class Home extends StatefulWidget {
   static String tag = 'home';
@@ -14,13 +17,14 @@ class Home extends StatefulWidget {
 
 class _HomeState extends State<Home> {
   final FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
-  String _name = '';
+  late User _user;
   int counter = 0;
+  final MemberRepository repository = MemberRepository();
 
   @override
   void initState() {
     super.initState();
-    _getName();
+    getCurrentUser();
   }
 
   @override
@@ -29,7 +33,7 @@ class _HomeState extends State<Home> {
       appBar: PreferredSize(
         preferredSize: Size.fromHeight(50.0),
         child: AppBar(
-          title: Text("Hello " + _name),
+          title: Text("Hello Niluk "),
           centerTitle: true,
           actions: <Widget>[
             new Stack(
@@ -95,7 +99,7 @@ class _HomeState extends State<Home> {
                     Align(
                       alignment: Alignment.centerRight,
                       child: Text(
-                        _name,
+                        "Niluk",
                         style: TextStyle(color: Colors.white, fontSize: 20.0),
                       ),
                     ),
@@ -205,50 +209,70 @@ class _HomeState extends State<Home> {
           ],
         ),
       ),
-      body: Container(
-        color: Color(0xffE5E5E5),
-        child: StaggeredGridView.count(
-          crossAxisCount: 4,
-          crossAxisSpacing: 12.0,
-          mainAxisSpacing: 12.0,
-          children: <Widget>[
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child:
-                  weightGraph("Weight progress", "65 kg", "+ 12.9% of target"),
-            ),
-            Padding(
-                padding: const EdgeInsets.all(8.0), child: proflie("Profile")),
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: bmi("BMI", "23.6"),
-            ),
-            Padding(
-              padding: const EdgeInsets.only(left: 8.0),
-              child: bodyFat("Body fat", "15%"),
-            ),
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: subscription("Subscription", "Gold member",
-                  "2021 April 29 to 2022 April 29"),
-            ),
-          ],
-          staggeredTiles: [
-            StaggeredTile.extent(4, 250.0),
-            StaggeredTile.extent(2, 335.0),
-            StaggeredTile.extent(2, 155.0),
-            StaggeredTile.extent(2, 155.0),
-            StaggeredTile.extent(4, 150.0),
-          ],
-        ),
-      ),
+      body: StreamBuilder<QuerySnapshot>(
+          stream: repository.getStream(),
+          builder: (context, snapshot) {
+            if (!snapshot.hasData) {
+              return LinearProgressIndicator();
+            }
+            return getMemberData(context, snapshot.data?.docs ?? [], _user.uid);
+          }),
     );
   }
 
-  void _getName() async {
+  void getCurrentUser() async {
     User currentUser = _firebaseAuth.currentUser!;
     setState(() {
-      _name = 'Niluk'; //currentUser.email!;
+      _user = currentUser; //currentUser.email!;
     });
   }
+}
+
+Widget getMemberData(BuildContext context, List<DocumentSnapshot>? snapshot,
+    String currentUserId) {
+  Member _buildListItem(BuildContext context, DocumentSnapshot snapshot) {
+    final member = Member.fromSnapshot(snapshot);
+    return member;
+  }
+
+  Member memberData(BuildContext context, List<DocumentSnapshot>? snapshot) {
+    var list = snapshot!.map((data) => _buildListItem(context, data));
+    print(list);
+    return list.where((element) => element.uid == currentUserId).first;
+  }
+
+  return Container(
+    color: Color(0xffE5E5E5),
+    child: StaggeredGridView.count(
+      crossAxisCount: 4,
+      crossAxisSpacing: 12.0,
+      mainAxisSpacing: 12.0,
+      children: <Widget>[
+        Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: weightGraph("Weight progress", "65 kg", "+ 12.9% of target"),
+        ),
+        Padding(padding: const EdgeInsets.all(8.0), child: proflie("Profile")),
+        Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: bmi("BMI", "23.6"),
+        ),
+        Padding(
+          padding: const EdgeInsets.only(left: 8.0),
+          child: bodyFat("Body fat", "15%"),
+        ),
+        Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: subscription(memberData(context, snapshot), "Subscription"),
+        ),
+      ],
+      staggeredTiles: [
+        StaggeredTile.extent(4, 250.0),
+        StaggeredTile.extent(2, 335.0),
+        StaggeredTile.extent(2, 155.0),
+        StaggeredTile.extent(2, 155.0),
+        StaggeredTile.extent(4, 150.0),
+      ],
+    ),
+  );
 }

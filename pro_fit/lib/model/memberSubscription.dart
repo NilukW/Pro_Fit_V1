@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:intl/src/intl/date_format.dart';
 import 'package:json_annotation/json_annotation.dart';
 import 'package:pro_fit/model/subscriptionPackages.dart';
 
@@ -7,12 +8,15 @@ part 'memberSubscription.g.dart';
 @JsonSerializable(explicitToJson: true)
 class MemberSubscription {
   SubscriptionPackages? memberPackage;
-  DateTime? startDate;
-  DateTime? endDate;
+  DateTime startDate;
+  DateTime endDate;
   bool? isCurrent;
 
   MemberSubscription(
-      {this.memberPackage, this.startDate, this.endDate, this.isCurrent});
+      {this.memberPackage,
+      required this.startDate,
+      required this.endDate,
+      this.isCurrent});
 
   //MemberSubscription(this.memberPackage, this.isCurrent);
 

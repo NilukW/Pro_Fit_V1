@@ -1,3 +1,4 @@
+import 'package:connectivity_wrapper/connectivity_wrapper.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -165,28 +166,29 @@ class _LoginState extends State<Login> {
     );
 
     return Scaffold(
-        backgroundColor: Colors.white,
-        body: Center(
-          child: Form(
-            key: _formKey,
-            child: ListView(
-              shrinkWrap: true,
-              padding: EdgeInsets.only(left: 24.0, right: 24.0),
-              children: <Widget>[
-                logo,
-                SizedBox(height: 24.0),
-                errorMessage,
-                SizedBox(height: 12.0),
-                email,
-                SizedBox(height: 8.0),
-                password,
-                SizedBox(height: 24.0),
-                loginButton,
-                registerButton,
-                forgotLabel
-              ],
-            ),
+      backgroundColor: Colors.white,
+      body: Center(
+        child: Form(
+          key: _formKey,
+          child: ListView(
+            shrinkWrap: true,
+            padding: EdgeInsets.only(left: 24.0, right: 24.0),
+            children: <Widget>[
+              logo,
+              SizedBox(height: 24.0),
+              errorMessage,
+              SizedBox(height: 12.0),
+              email,
+              SizedBox(height: 8.0),
+              password,
+              SizedBox(height: 24.0),
+              loginButton,
+              registerButton,
+              forgotLabel,
+            ],
           ),
-        ));
+        ),
+      ),
+    );
   }
 }

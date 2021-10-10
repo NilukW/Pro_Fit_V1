@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:json_annotation/json_annotation.dart';
 
 import 'memberSubscription.dart';
@@ -16,11 +17,11 @@ class Member {
       {this.memberCurrentSubscription});
   //Member(this.uid, this.firstName, this.lastName, this.joinedDate);
 
-  //factory Member.fromSnapshot(DocumentSnapshot snapshot) {
-  //  final newMember = Member.fromJson(snapshot.data() as Map<String, dynamic>);
-  //  newMember.uid = snapshot.reference.id;
-  //  return newMember;
-  //}
+  factory Member.fromSnapshot(DocumentSnapshot snapshot) {
+    final newMember = Member.fromJson(snapshot.data() as Map<String, dynamic>);
+    //newMember.uid = snapshot.reference.id;
+    return newMember;
+  }
 
   //factory Member.fromJson(Map<String, dynamic> json) => _memberFromJson(json);
 

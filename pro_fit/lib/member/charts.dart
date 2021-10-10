@@ -1,8 +1,10 @@
 import 'package:chart_sparkline/chart_sparkline.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
+import 'package:pro_fit/model/member.dart';
 
 var data = [0.0, 1.0, 1.5, 2.0, 0.0, 0.0, -0.5, -1.0, -0.5, 0.0, 0.0];
-var data1 = [0.0, -2.0, 3.5, -2.0, 0.5, 0.7, 0.8, 1.0, 2.0, 3.0, 3.2];
+var data1 = [84.0, 82.0, 81.0, 80.0, 78.0, 75.0, 77.0, 77.0, 76.0, 80.0, 79.0];
 
 Material weightGraph(String title, String priceVal, String subtitle) {
   return Material(
@@ -56,8 +58,10 @@ Material weightGraph(String title, String priceVal, String subtitle) {
                     fillGradient: new LinearGradient(
                       begin: Alignment.topCenter,
                       end: Alignment.bottomCenter,
-                      colors: [Colors.amber, Colors.amber],
+                      colors: [Colors.grey, Colors.amber],
                     ),
+                    averageLine: true,
+                    enableThreshold: true,
                   ),
                 ),
               ],
@@ -69,7 +73,7 @@ Material weightGraph(String title, String priceVal, String subtitle) {
   );
 }
 
-Material subscription(String title, String priceVal, String dateRange) {
+Material subscription(Member member, String title) {
   return Material(
     color: Colors.white,
     elevation: 14.0,
@@ -97,7 +101,9 @@ Material subscription(String title, String priceVal, String dateRange) {
                 Padding(
                   padding: EdgeInsets.only(bottom: 20.0),
                   child: Text(
-                    priceVal,
+                    member.memberCurrentSubscription!.memberPackage!.packageName
+                            .toString() +
+                        " member",
                     style: TextStyle(
                       fontSize: 30.0,
                     ),
@@ -106,7 +112,11 @@ Material subscription(String title, String priceVal, String dateRange) {
                 Padding(
                   padding: EdgeInsets.all(1.0),
                   child: Text(
-                    dateRange,
+                    DateFormat('yyyy-MM-dd').format(
+                            member.memberCurrentSubscription!.startDate) +
+                        " to " +
+                        DateFormat('yyyy-MM-dd')
+                            .format(member.memberCurrentSubscription!.endDate),
                     style: TextStyle(
                       fontSize: 20.0,
                       color: Colors.blueGrey,
