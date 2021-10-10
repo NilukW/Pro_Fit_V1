@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "381956571547",
+    "project_id": "profitapp-22e77",
+    "storage_bucket": "profitapp-22e77.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:381956571547:android:1923d89c972d178b0de13e",
+        "android_client_info": {
+          "package_name": "com.example.pro_fit"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "381956571547-aj64ot4ns61pqdrmenqglodflmkvgj5p.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDl1C-ZF9n34OwQDgCcn55MXtgM3kjw8Es"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "381956571547-aj64ot4ns61pqdrmenqglodflmkvgj5p.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
